@@ -49,11 +49,13 @@ int a2[N],c2[N];
 int f[1<<5][N];
 vector<int> g[N];
 pii ans;
-priority_queue<pii,vector<pii>,greater<pii> > q;
+queue<pii> q1,q2,q3;
+//priority_queue<pii,vector<pii>,greater<pii> > q;
 int id(int x,int y)
 {
 	return (x-1)*_m+y;
 }
+vector<pii> h;
 int check(int v)
 {
 	for(int i=1;i<=n;i++)
@@ -72,15 +74,33 @@ int check(int v)
 		for(int j=(i-1)&i;j;j=(j-1)&i)
 			for(int l=1;l<=n;l++)
 				f[i][l]=min(f[i][l],f[j][l]+f[i^j][l]);
+		h.clear();
 		for(int j=1;j<=n;j++)
 		{
-			q.push(pii(f[i][j],j));
+			h.push_back(pii(f[i][j],j));
 			vis[j]=0;
 		}
-		while(!q.empty())
+		sort(h.begin(),h.end());
+		for(int i=0;i<n;i++)
+			q3.push(h[i]);
+		while(!q1.empty()||!q2.empty()||!q3.empty())
 		{
-			pii x=q.top();
-			q.pop();
+			pii x;
+			if(!q1.empty()&&(q2.empty()||(q1.front()<=q2.front()))&&(q3.empty()||(q1.front()<=q3.front())))
+			{
+				x=q1.front();
+				q1.pop();
+			}
+			else if(!q2.empty()&&(q1.empty()||(q2.front()<=q1.front()))&&(q3.empty()||(q2.front()<=q3.front())))
+			{
+				x=q2.front();
+				q2.pop();
+			}
+			else
+			{
+				x=q3.front();
+				q3.pop();
+			}
 			if(vis[x.second])
 				continue;
 			vis[x.second]=1;
@@ -91,7 +111,12 @@ int check(int v)
 			{
 				int v=*it;
 				if(!vis[v])
-					q.push(pii(x.first,v));
+				{
+					if(a2[x.second]==100000-1)
+						q1.push(pii(x.first,v));
+					else
+						q2.push(pii(x.first,v));
+				}
 			}
 		}
 	}
@@ -162,7 +187,7 @@ void solve()
 					g[id(i,j)].push_back(id(i,j+1));
 			}
 	ans=pii(inf,inf);
-	for(int times=100;times;times--)
+	for(int times=200;times;times--)
 		gao();
 	if(ans.first==inf)
 		printf("-1 -1\n");
