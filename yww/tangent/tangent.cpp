@@ -200,8 +200,8 @@ void calc()
 		{
 			ldb d1=(-B+sqrt(delta))/(2*A);
 			gao(d1);
-//			ldb d2=(-B+sqrt(delta))/(2*A);
-//			gao(d2);
+			ldb d2=(-B+sqrt(delta))/(2*A);
+			gao(d2);
 		}
 	}
 }
@@ -247,7 +247,7 @@ void solve()
 }
 int main()
 {
-//	freopen("tangent.in","r",stdin);
+//	freopen("0.in","r",stdin);
 	int t;
 	scanf("%d",&t);
 	while(t--)
