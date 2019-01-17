@@ -1,0 +1,1 @@
+for /l %%i in (0,1,8) do tangent <%%i.in >%%i.out
