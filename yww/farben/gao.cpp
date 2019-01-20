@@ -100,8 +100,8 @@ namespace io
 	io_flusher;
 }
 const ll p=1000000007;
-const int N=2010;
-const int n=2000;
+const int N=1010;
+const int n=1000;
 //const int m=5;
 int m;
 
