@@ -60,6 +60,7 @@ namespace flow
 	int len,cost,flow;
 	int num;
 	int S,T;
+	int ti;
 	int op(int x)
 	{
 		return ((x-1)^1)+1;
@@ -72,10 +73,10 @@ namespace flow
 			cost+=len*fl;
 			return fl;
 		}
-		vis[x]=1;
+		vis[x]=ti;
 		int s=0;
 		for(int i=h[x];i;i=t[i])
-			if(c[i]&&!w[i]&&!vis[v[i]])
+			if(c[i]&&!w[i]&&vis[v[i]]!=ti)
 			{
 				int d=aug(v[i],min(fl,c[i]));
 				c[i]-=d;
@@ -91,14 +92,14 @@ namespace flow
 	{
 		int s=inf;
 		for(int i=1;i<=num;i++)
-			if(vis[i])
+			if(vis[i]==ti)
 				for(int j=h[i];j;j=t[j])
-					if(c[j]&&!vis[v[j]])
+					if(c[j]&&vis[v[j]]!=ti)
 						s=min(s,w[j]);
 		if(s==inf)
 			return 0;
 		for(int i=1;i<=num;i++)
-			if(vis[i])
+			if(vis[i]==ti)
 				for(int j=h[i];j;j=t[j])
 				{
 					w[j]-=s;
@@ -112,7 +113,7 @@ namespace flow
 		flow=cost=len=0;
 		do
 			do
-				memset(vis,0,sizeof vis);
+				ti++;
 			while(aug(S,inf));
 		while(gao());
 	}
