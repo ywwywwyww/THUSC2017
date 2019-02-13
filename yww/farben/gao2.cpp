@@ -149,7 +149,7 @@ int main()
 		{
 			l=i-curlen;
 			lslen=curlen;
-			for(int j=0;i<=curlen;j++)
+			for(int j=0;j<=curlen;j++)
 				ls[j]=cur[j]*invs%p;
 		}
 		curlen=clen;
